@@ -10,6 +10,8 @@ import org.testng.annotations.Test;
 public class Guru99Test {
     private WebDriver driver;
 
+    // Method to initialize WebDriver and navigate to the Guru99 login page before each test
+
     @BeforeMethod
     public void setup(){
         System.setProperty("webdriver.chrome.driver","F://Intelij selenium projects//Workshop_project//src//test//resources//dirvers//chromedriver.exe");
@@ -17,6 +19,7 @@ public class Guru99Test {
         driver.get("https://demo.guru99.com/V4/");
     }
 
+    // Test case for successful login
 
     @Test
     public void successfulLogin(){
@@ -31,11 +34,13 @@ public class Guru99Test {
         WebElement loginButton = driver.findElement(By.xpath("//input[@value='LOGIN']"));
         loginButton.click();
 
-
+        // Find the welcome label and assert that it contains the expected text
         WebElement welcomeLable = driver.findElement(By.xpath("//tr[@class='heading3']/td"));
         Assert.assertEquals(welcomeLable.getText(), "Manger Id : mngr538765", "Error: User name is incorrect");
 
     }
+
+    // Test case for unsuccessful login
     @Test
     public void unsuccessfulLogin(){
 
@@ -48,12 +53,14 @@ public class Guru99Test {
         WebElement loginButton = driver.findElement(By.xpath("//input[@value='LOGIN']"));
         loginButton.click();
 
+        // Switch to the alert and get its text, then assert that it contains the expected message
         String alertMsg = driver.switchTo().alert().getText();
         Assert.assertEquals(alertMsg,"User or Password is not valid","Error: Alert Message incorrect");
 
     }
-//    @AfterMethod
-//    public void teardown(){
-//        driver.quit();
-//    }
+    // Method to quit the WebDriver session after each test
+    @AfterMethod
+    public void teardown(){
+        driver.quit();
+    }
 }
